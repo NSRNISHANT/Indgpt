@@ -22,7 +22,7 @@ function typeText(element, text) {
   let index = 0;
 
   let interval = setInterval(() => {
-    if(index < text.length) {
+    if (index < text.length) {
       element.innerHTML += text.charAt(index);
       index++;
     } else {
@@ -40,7 +40,7 @@ function generateUniqueId() {
   return `id-${timestamp}-${hexadecimalString}`;
 }
 
-function chatStripe (isAi, value, uniqueId) {
+function chatStripe(isAi, value, uniqueId) {
   return (
     `
      <div class="wrapper ${isAi && 'ai'}">
@@ -77,11 +77,11 @@ const handleSubmit = async (e) => {
 
   // fetch data from server -> bot's response
 
-  const response = await fetch('http://localhost:5000', {
-    method: 'POST', 
+  const response = await fetch('https://indgpt.onrender.com', {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json'
-    }, 
+    },
     body: JSON.stringify({
       prompt: data.get('prompt')
     })
@@ -90,11 +90,11 @@ const handleSubmit = async (e) => {
   clearInterval(loadInterval);
   messageDiv.innerHTML = '';
 
-  if(response.ok) {
+  if (response.ok) {
     const data = await response.json();
     const parsedData = data.bot.trim();
 
-   typeText(messageDiv, parsedData); 
+    typeText(messageDiv, parsedData);
   } else {
     const err = await reponse.text();
 
@@ -106,7 +106,7 @@ const handleSubmit = async (e) => {
 
 form.addEventListener('submit', handleSubmit);
 form.addEventListener('keyup', (e) => {
-  if(e.keyCode === 13) {
+  if (e.keyCode === 13) {
     handleSubmit(e);
   }
 })
